@@ -51,4 +51,72 @@ async function getPokemon(id){
     if(typesPokemon.includes(typeCard)){
         document.querySelector(`.card[data-key="${data.id}"]`).style.backgroundColor = types[typeCard]
     }    
+    pokeModal()
+}
+
+// Add click card 
+function pokeModal(){
+    document.querySelectorAll(".card").forEach(item =>{
+        item.addEventListener('click', () =>{
+            let id = item.getAttribute("data-key")
+            fillModal(id)
+        })
+    });
+};
+
+// Resquest for modal fill
+async function fillModal(id){
+
+    const url = `https://pokeapi.co/api/v2/pokemon/${id}`
+    let response = await fetch(url)
+    let data = await response.json()
+
+    // Select background modal 
+    modal.setAttribute("data-key", data.id)
+    let typeCard = data.types[0].type.name
+    let typesPokemon = Object.keys(types)
+    if(typesPokemon.includes(typeCard)){
+        document.querySelector(`.modal-container[data-key="${data.id}"]`).style.backgroundColor = types[typeCard]
+    }    
+    
+    //Writeing modal 
+    modal.innerHTML = `
+        <div class="modal-left">
+            <div class="circle-modal">
+                <img class="img-modal" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/${data.id.toString().padStart(3,"0")}.png">
+            </div>
+            <div class="modal-name">${data.name}</div>
+            <div class="modal-id">#${data.id.toString().padStart(3,"0")}</div>
+            <div class="modal-type">Type: ${data.types[0].type.name}</div>
+        </div>
+        <div class="modal-right">
+            <div class="poke-info">
+                <div class="experience">Experience: ${data.base_experience}</div>
+                <div class="weight">Weight: ${data.weight} Kg</div>
+                <div class="height">Height: ${data.height * 10}cm</div>
+            </div>
+            <div class="poke-game">
+                <div class="abylities">
+                    <span class="title-abylities">Abylities</span>
+                </div>
+                <div class="types">
+                    <span class="title-types">Types</span>
+                </div>
+        </div>
+        </div>
+       `
+       
+    // Writeing pokemon abilities 
+    let abilityArray = data.abilities
+    for (let i = 0; i < abilityArray.length; i++){
+        let ability =  abilityArray[i].ability.name
+        document.querySelector(".abylities").innerHTML += `<div class="ability">${ability}</div>` 
+    }
+
+    // Writing pokemon types 
+    let typesArray = data.types
+    for (let i = 0; i < typesArray.length; i++){
+        let type =  data.types[i].type.name
+        document.querySelector(".types").innerHTML += `<div class="type-modal">${type}</div>` 
+    }
 }
