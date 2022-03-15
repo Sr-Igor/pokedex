@@ -1,0 +1,129 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-color: #ecf5ec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0%;
+}
+
+/* modal */ 
+
+.modal{
+    display: flex; /*flex*/
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.767);
+    position: fixed;
+    opacity: 1;
+    transition: all 0.5s 0s ease;
+}
+
+.modal-container{
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    height: 500px;
+    border-radius: 30px;
+    background-color: #DEFDE0;
+    box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.75);
+}
+
+.modal-left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    flex: 2;
+    height: 100%;
+}
+
+.modal-right{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex: 3;
+    height: 100%;
+}
+
+.circle-modal{
+    background-color: white;
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+}
+
+.img-modal{
+    width: 100%;
+    height: auto;
+}
+
+.modal-name{
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.modal-id{
+    background-color: #f2f7f21e;
+    padding: 7px;
+    border-radius: 12px;
+    font-weight: 500;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.199);
+    font-size: 20px;
+}
+
+.modal-type{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.poke-info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 15px;
+}
+
+.experience{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 15px;
+}
+
+.weight, .height{
+    font-size: 12px;
+    font-weight: 700;
+    margin: 15px;
+}
+
+.poke-game{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.abylities, .types{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-abylities, .title-types{
+    font-size: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.ability, .type-modal{
+    margin: 3px;
+    font-size: 20px;
+    font-weight: 500;
+}
