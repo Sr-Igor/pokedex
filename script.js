@@ -1,6 +1,9 @@
 // Variables
+// Variables
 let pokemonContainer = document.querySelector(".container")
 let modal = document.querySelector('.modal-container')
+let page = document.querySelector(".currentPage")
+let currentPage = 1
 let types = {
     fire: "#FDDFDF",
     grass:"#DEFDE0",
@@ -17,8 +20,11 @@ let types = {
     fighting:"#E6E0D4",
     normaç:"#F5F5F5",
 }
+let prev = document.querySelector(".prev")
+let next = document.querySelector(".next")
 let inicialPokemon = 1
 let pokemon_count = 50 
+
 
 // Numbers of pokemons request
 singleFetch()
@@ -33,6 +39,9 @@ async function getPokemon(id){
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`
     let response = await fetch(url)
     let data = await response.json()
+
+    next.removeEventListener('click', nextPage)
+    prev.removeEventListener('click', prevPage)
 
     // Writeing html card
     pokemonContainer.innerHTML += `
@@ -52,6 +61,12 @@ async function getPokemon(id){
         document.querySelector(`.card[data-key="${data.id}"]`).style.backgroundColor = types[typeCard]
     }    
     pokeModal()
+
+    //  load pages for add next page
+    let loaded = document.querySelectorAll(".card")
+    if(loaded.length == 50){
+        callPages()
+    }
 }
 
 // Add click card 
@@ -118,5 +133,54 @@ async function fillModal(id){
     for (let i = 0; i < typesArray.length; i++){
         let type =  data.types[i].type.name
         document.querySelector(".types").innerHTML += `<div class="type-modal">${type}</div>` 
+    }
+
+    // Open and Close modal 
+
+        // Open 
+    document.querySelector(".modal").style.display = "flex"
+    setTimeout(()=>{
+        document.querySelector(".modal").style.opacity = "1"
+    },80)
+
+        //Close
+    document.querySelector(".modal").addEventListener("click", (e)=>{
+        if(e.target.classList.contains("modal")){
+            document.querySelector(".modal").style.opacity = "0"
+            setTimeout(()=>{
+                document.querySelector(".modal").style.display = "none"
+            },300)
+        }
+    })
+}
+
+//Event buttons 
+function callPages(){
+    next.addEventListener('click', nextPage)
+    prev.addEventListener('click', prevPage)
+}
+
+//function Buttons    
+function nextPage(){
+    event.preventDefault()
+    if(currentPage < 17){
+        pokemonContainer.innerHTML = ""
+        inicialPokemon = pokemon_count + 1
+         pokemon_count = pokemon_count + 50
+         currentPage ++
+         page.innerHTML = currentPage
+        singleFetch()
+    }
+}
+
+function prevPage(){
+    event.preventDefault()
+    if(currentPage > 1){
+        pokemonContainer.innerHTML = ""
+        inicialPokemon =  inicialPokemon - 100
+        pokemon_count = pokemon_count - 50
+        currentPage --
+        page.innerHTML = currentPage
+        singleFetch()
     }
 }
